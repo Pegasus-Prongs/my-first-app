@@ -1,32 +1,53 @@
-import { Link, Stack } from 'expo-router';
-import { StyleSheet } from 'react-native';
+import * as React from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Text, Button, useTheme } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+const NotFound = () => {
+  const theme = useTheme();
+  const navigation = useNavigation();
 
-export default function NotFoundScreen() {
   return (
-    <>
-      <Stack.Screen options={{ title: 'Oops!' }} />
-      <ThemedView style={styles.container}>
-        <ThemedText type="title">This screen doesn't exist.</ThemedText>
-        <Link href="/" style={styles.link}>
-          <ThemedText type="link">Go to home screen!</ThemedText>
-        </Link>
-      </ThemedView>
-    </>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={[styles.title, { color: theme.colors.primary }]}>
+        404 - Page Not Found
+      </Text>
+      <Text style={[styles.message, { color: theme.colors.text }]}>
+        Sorry, the page you're looking for doesn't exist.
+      </Text>
+      <Button
+        mode="contained"
+        onPress={() => navigation.navigate('(tabs)/index')}
+        style={styles.button}
+      >
+        Go to Home
+      </Button>
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
+    alignItems: 'center',
+    padding: 16,
   },
-  link: {
-    marginTop: 15,
-    paddingVertical: 15,
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  message: {
+    fontSize: 18,
+    textAlign: 'center',
+    marginBottom: 24,
+  },
+  button: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 8,
   },
 });
+
+export default NotFound;
